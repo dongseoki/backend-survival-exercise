@@ -1,6 +1,7 @@
-package jpa.hibernate.example.entities;
+package jpa.hibernate.example.models;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -18,9 +19,10 @@ public class Person {
   private Integer age;
 
   @Column(name = "gender")
-  private String gender;
+  @Embedded
+  private Gender gender;
 
-  public Person(String name, int age, String gender) {
+  public Person(String name, int age, Gender gender) {
     this.name = name;
     this.age = age;
     this.gender = gender;
@@ -38,7 +40,7 @@ public class Person {
     return age;
   }
 
-  public String gender() {
+  public Gender gender() {
     return gender;
   }
 

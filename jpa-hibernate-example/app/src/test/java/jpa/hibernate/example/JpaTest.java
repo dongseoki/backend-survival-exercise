@@ -4,7 +4,8 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
-import jpa.hibernate.example.entities.Person;
+import jpa.hibernate.example.models.Gender;
+import jpa.hibernate.example.models.Person;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -42,7 +43,7 @@ public class JpaTest {
 
   @Test
   void queryTestButNotInDb() {
-    Person person = new Person("asdf", 35, "man");
+    Person person = new Person("asdf", 35, Gender.male());
     entityManager.persist(person);
   }
 
@@ -50,7 +51,7 @@ public class JpaTest {
   void queryTestBSuccessDataInDb() {
     EntityTransaction transaction = entityManager.getTransaction();
     transaction.begin();
-    Person person = new Person("asdf", 35, "man");
+    Person person = new Person("asdf", 35, Gender.male());
     entityManager.persist(person);
     transaction.commit();
 
@@ -67,13 +68,13 @@ public class JpaTest {
     EntityTransaction transaction = entityManager.getTransaction();
     {
       transaction.begin();
-      Person person = new Person("Mr.Big", 35, "남");
+      Person person = new Person("Mr.Big", 35, Gender.male());
       entityManager.persist(person);
       transaction.commit();
     }
     {
       transaction.begin();
-      Person person = new Person("Mr.Big", 35, "남");
+      Person person = new Person("Mr.Big", 35, Gender.male());
       Person found = entityManager.find(Person.class, "Mr.Big");
       assertEquals(person, found);
       transaction.commit();
