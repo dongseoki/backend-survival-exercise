@@ -124,4 +124,30 @@ public class JpaTest {
     assertEquals(1, people.size());
   }
 
+  @Test
+  void createAndRemoveItem() {
+    EntityTransaction transaction = entityManager.getTransaction();
+    {
+      transaction.begin();
+      Person person = entityManager.find(Person.class, "asdf");
+      person.addItem("Z", "this is end.");
+      transaction.commit();
+    }
+
+    {
+      transaction.begin();
+      Person person = entityManager.find(Person.class, "asdf");
+      assertEquals(1, person.items().size());
+      person.removeItem("Z");
+      transaction.commit();
+    }
+    {
+      transaction.begin();
+      Person person = entityManager.find(Person.class, "asdf");
+      assertEquals(1, person.items().size());
+      person.removeItem("Z");
+      transaction.commit();
+    }
+  }
+
 }
