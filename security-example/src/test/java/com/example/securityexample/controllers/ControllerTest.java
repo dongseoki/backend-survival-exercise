@@ -24,24 +24,37 @@ import static org.mockito.BDDMockito.given;
 })
 @ActiveProfiles("test")
 public abstract class ControllerTest {
+  protected static final String USER_ID = "UserId";
+  protected static final String ADMIN_ID = "AdminId";
   @MockBean
   protected UserDetailsDao userDetailsDao; // ← 여기로 가져온다.
   protected String userAccessToken;
+
+  protected String adminAccessToken;
   @SpyBean
   protected AccessTokenGenerator accessTokenGenerator;
   @SpyBean
   private AccessTokenService accessTokenService;
 
   @BeforeEach
-  void setUpUserDetailsDaoForAuthentication() { // ← 이 이름을 똑같이 쓰면 override된다는 점에 주의!
-    userAccessToken = accessTokenGenerator.generate("UserID");
+  void setUpAccessTokenAndUserDetailsDaoForAuthentication() {
+    userAccessToken = accessTokenGenerator.generate(USER_ID);
+    adminAccessToken = accessTokenGenerator.generate(ADMIN_ID);
 
-    UserDetails userDetails = User.withUsername("UserID")
-                                  .password("TOKEN")
-                                  .authorities("ROLE_USER")
-                                  .build();
+    UserDetails user = User.withUsername(USER_ID)
+                           .password(userAccessToken)
+                           .authorities("ROLE_USER")
+                           .build();
 
     given(userDetailsDao.findByAccessToken(userAccessToken))
-        .willReturn(Optional.of(userDetails));
+        .willReturn(Optional.of(user));
+
+    UserDetails admin = User.withUsername(ADMIN_ID)
+                            .password(adminAccessToken)
+                            .authorities("ROLE_ADMIN")
+                            .build();
+
+    given(userDetailsDao.findByAccessToken(adminAccessToken))
+        .willReturn(Optional.of(admin));
   }
 }
