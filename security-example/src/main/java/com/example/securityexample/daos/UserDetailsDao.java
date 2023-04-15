@@ -69,4 +69,12 @@ public class UserDetailsDao {
       return Optional.of(userDetails);
     }, accessToken);
   }
+
+  public void removeAccessToken(String accessToken) {
+    jdbcTemplate.update("""
+            DELETE FROM access_tokens WHERE token=?
+            """,
+        accessToken
+    );
+  }
 }

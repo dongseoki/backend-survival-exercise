@@ -2,6 +2,7 @@ package com.example.securityexample.controllers;
 
 import com.example.securityexample.config.AccessTokenGenerator;
 import com.example.securityexample.services.LoginService;
+import com.example.securityexample.services.LogoutService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,6 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.Optional;
 
 import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -26,6 +28,9 @@ class SessionControllerTest extends ControllerTest {
 
   @SpyBean
   private LoginService loginService;
+
+  @SpyBean
+  private LogoutService logoutService;
 
   @SpyBean
   private AccessTokenGenerator accessTokenGenerator;
@@ -87,5 +92,28 @@ class SessionControllerTest extends ControllerTest {
                .contentType(MediaType.APPLICATION_JSON)
                .content(json))
            .andExpect(status().isBadRequest());
+  }
+
+  @Test
+  @DisplayName("DELETE /session - with correct access token")
+  void logoutWithCorrectAccessToken() throws Exception {
+    mockMvc.perform(delete("/session")
+               .header("Authorization", "Bearer TOKEN"))
+           .andExpect(status().isOk());
+  }
+
+  @Test
+  @DisplayName("DELETE /session - with incorrect access token")
+  void logoutWithIncorrectAccessToken() throws Exception {
+    mockMvc.perform(delete("/session")
+               .header("Authorization", "Bearer XXX"))
+           .andExpect(status().isForbidden());
+  }
+
+  @Test
+  @DisplayName("DELETE /session - without access token")
+  void logoutWithoutAccessToken() throws Exception {
+    mockMvc.perform(delete("/session"))
+           .andExpect(status().isForbidden());
   }
 }
