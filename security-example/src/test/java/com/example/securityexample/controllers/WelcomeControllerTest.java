@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(WelcomeController.class)
-class WelcomeControllerTest extends  ControllerTest{
+class WelcomeControllerTest extends ControllerTest {
   @Autowired
   private MockMvc mockMvc;
 
@@ -18,7 +18,7 @@ class WelcomeControllerTest extends  ControllerTest{
   @DisplayName("GET / - with correct Access Token")
   void homeWithAccessToken() throws Exception {
     mockMvc.perform(get("/")
-               .header("Authorization", "Bearer TOKEN"))
+               .header("Authorization", "Bearer " + userAccessToken))
            .andExpect(status().isOk());
   }
 

@@ -1,6 +1,5 @@
 package com.example.securityexample.controllers;
 
-import com.example.securityexample.config.AccessTokenGenerator;
 import com.example.securityexample.services.LoginService;
 import com.example.securityexample.services.LogoutService;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,9 +31,6 @@ class SessionControllerTest extends ControllerTest {
 
   @SpyBean
   private LogoutService logoutService;
-
-  @SpyBean
-  private AccessTokenGenerator accessTokenGenerator;
 
   @SpyBean
   private PasswordEncoder passwordEncoder;
@@ -102,7 +98,7 @@ class SessionControllerTest extends ControllerTest {
   @DisplayName("DELETE /session - with correct access token")
   void logoutWithCorrectAccessToken() throws Exception {
     mockMvc.perform(delete("/session")
-               .header("Authorization", "Bearer TOKEN"))
+               .header("Authorization", "Bearer " + userAccessToken))
            .andExpect(status().isOk());
   }
 

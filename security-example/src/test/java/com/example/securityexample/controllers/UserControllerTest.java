@@ -1,6 +1,5 @@
 package com.example.securityexample.controllers;
 
-import com.example.securityexample.config.AccessTokenGenerator;
 import com.example.securityexample.services.SignupService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -23,9 +22,6 @@ class UserControllerTest extends ControllerTest {
 
   @SpyBean
   private SignupService signupService;
-
-  @SpyBean
-  private AccessTokenGenerator accessTokenGenerator;
 
   @SpyBean
   private PasswordEncoder passwordEncoder;
