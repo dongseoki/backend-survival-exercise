@@ -12,6 +12,7 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Optional;
@@ -35,10 +36,13 @@ class SessionControllerTest extends ControllerTest {
   @SpyBean
   private AccessTokenGenerator accessTokenGenerator;
 
+  @SpyBean
+  private PasswordEncoder passwordEncoder;
+
   @BeforeEach
   void setUp() {
     UserDetails userDetails = User.withUsername("UserID")
-                                  .password("password")
+                                  .password(passwordEncoder.encode("password"))
                                   .authorities("ROLE_USER")
                                   .build();
 
