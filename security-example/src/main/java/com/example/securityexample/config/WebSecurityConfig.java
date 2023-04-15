@@ -30,6 +30,7 @@ public class WebSecurityConfig {
 
     http.authorizeHttpRequests()
         .requestMatchers(HttpMethod.POST, "/session").permitAll()
+        .requestMatchers(HttpMethod.POST, "/users").permitAll()
         .anyRequest().authenticated();
 
     return http.build();

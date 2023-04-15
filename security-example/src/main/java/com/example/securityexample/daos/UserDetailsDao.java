@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import java.sql.ResultSet;
 import java.util.Optional;
 
 @Component
@@ -75,6 +76,22 @@ public class UserDetailsDao {
             DELETE FROM access_tokens WHERE token=?
             """,
         accessToken
+    );
+  }
+
+  public boolean existsByUsername(String username) {
+    String query = "SELECT id FROM users WHERE username=?";
+
+    return Boolean.TRUE.equals(
+        jdbcTemplate.query(query, ResultSet::next, username));
+  }
+
+  public void addUser(String id, String username, String encodedPassword) {
+    jdbcTemplate.update("""
+            INSERT INTO users (id, username, password, role)
+            VALUES (?, ?, ?, ?)
+            """,
+        id, username, encodedPassword, "ROLE_USER"
     );
   }
 }
