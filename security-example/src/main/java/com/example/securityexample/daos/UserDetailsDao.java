@@ -44,4 +44,29 @@ public class UserDetailsDao {
         accessToken, userId
     );
   }
+
+  public Optional<UserDetails> findByAccessToken(String accessToken) {
+    String query = """
+        SELECT users.id, users.role
+        FROM users
+        JOIN access_tokens ON access_tokens.user_id=users.id
+        WHERE access_tokens.token=?
+        """;
+
+    return jdbcTemplate.query(query, resultSet -> {
+      if (!resultSet.next()) {
+        return Optional.empty();
+      }
+
+      String id = resultSet.getString("id");
+      String role = resultSet.getString("role");
+
+      UserDetails userDetails = User.withUsername(id)
+                                    .password(accessToken) // ← Access Token을 Controller까지 전달하는 용도.
+                                    .authorities(role)
+                                    .build();
+
+      return Optional.of(userDetails);
+    }, accessToken);
+  }
 }

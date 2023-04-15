@@ -1,14 +1,12 @@
 package com.example.securityexample.controllers;
 
 import com.example.securityexample.config.AccessTokenGenerator;
-import com.example.securityexample.daos.UserDetailsDao;
 import com.example.securityexample.services.LoginService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.userdetails.User;
@@ -31,9 +29,6 @@ class SessionControllerTest extends ControllerTest {
 
   @SpyBean
   private AccessTokenGenerator accessTokenGenerator;
-
-  @MockBean
-  private UserDetailsDao userDetailsDao;
 
   @BeforeEach
   void setUp() {

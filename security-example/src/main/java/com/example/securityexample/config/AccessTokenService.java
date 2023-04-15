@@ -1,21 +1,25 @@
 package com.example.securityexample.config;
 
+import com.example.securityexample.daos.UserDetailsDao;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class AccessTokenService {
-  public Authentication authenticate(String accessToken) {
-    if (!accessToken.equals("TOKEN")) {
-      return null;
-    }
+  private final UserDetailsDao userDetailsDao;
 
-    Authentication authentication =
-        UsernamePasswordAuthenticationToken.authenticated(
-            "User", null, List.of());
-    return authentication;
+  public AccessTokenService(UserDetailsDao userDetailsDao) {
+    this.userDetailsDao = userDetailsDao;
+  }
+
+  public Authentication authenticate(String accessToken) {
+    return userDetailsDao.findByAccessToken(accessToken)
+                         .map(userDetails ->
+                             UsernamePasswordAuthenticationToken.authenticated(
+                                 userDetails.getUsername(),
+                                 userDetails.getPassword(),
+                                 userDetails.getAuthorities()))
+                         .orElse(null);
   }
 }
