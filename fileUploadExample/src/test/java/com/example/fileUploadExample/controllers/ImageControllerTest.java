@@ -1,9 +1,11 @@
 package com.example.fileUploadExample.controllers;
 
+import com.example.fileUploadExample.services.ImageStorage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -17,6 +19,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class ImageControllerTest {
   @Autowired
   private MockMvc mockMvc;
+
+  @SpyBean
+  private ImageStorage imageStorage;
 
   @Test
   @DisplayName("POST /images")
