@@ -2,24 +2,21 @@ package com.example.onlineshop.models;
 
 import jakarta.persistence.Column;
 
-public class CategoryId {
+import java.io.Serializable;
+
+public class ImageId implements Serializable {
   @Column(name = "id")
   private String value;
 
-  public CategoryId() {
+  public ImageId() {
   }
 
-  public CategoryId(String value) {
+  public ImageId(String value) {
     this.value = value;
-  }
-
-  public static CategoryId of(String categoryId) {
-    return new CategoryId(categoryId);
   }
 
   @Override
   public String toString() {
     return value;
   }
-
 }
