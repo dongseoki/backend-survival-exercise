@@ -14,7 +14,7 @@ public record ProductSummaryDto(
     return new ProductSummaryDto(
         product.id(),
         CategoryDto.of(category),
-        ImageDto.of(product.getImages().stream().findFirst().get().url()),
+        ImageDto.of(product.images().stream().findFirst().get().url()),
         product.name(),
         product.price().amount());
   }

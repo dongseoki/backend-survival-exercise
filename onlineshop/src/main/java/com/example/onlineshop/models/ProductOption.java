@@ -35,5 +35,15 @@ public class ProductOption {
   @UpdateTimestamp
   private LocalDateTime updatedAt;
 
-// …(후략)…
+  public String id() {
+    return id.toString();
+  }
+
+  public String name() {
+    return name;
+  }
+
+  public List<ProductOptionItem> items() {
+    return items;
+  }
 }

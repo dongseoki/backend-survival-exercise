@@ -65,8 +65,8 @@ public class Product {
     return id.toString();
   }
 
-  public List<Image> getImages() {
-    return images;
+  public List<Image> images() {
+    return new ArrayList<>(images);
   }
 
   public String name() {
@@ -75,5 +75,18 @@ public class Product {
 
   public Money price() {
     return price;
+  }
+
+  public String description() {
+    return description;
+  }
+
+
+  public int optionSize() {
+    return options.size();
+  }
+
+  public ProductOption option(int i) {
+    return options.get(i);
   }
 }

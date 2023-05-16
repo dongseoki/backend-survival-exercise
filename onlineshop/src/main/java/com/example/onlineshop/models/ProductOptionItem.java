@@ -23,4 +23,12 @@ public class ProductOptionItem {
 
   @UpdateTimestamp
   private LocalDateTime updatedAt;
+
+  public ProductOptionItemId id() {
+    return id;
+  }
+
+  public String name() {
+    return name;
+  }
 }
