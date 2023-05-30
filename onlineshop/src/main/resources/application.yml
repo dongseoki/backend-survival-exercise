@@ -6,3 +6,6 @@ spring:
 
 jwt:
   secret: secret
+
+server:
+  port: 8090
