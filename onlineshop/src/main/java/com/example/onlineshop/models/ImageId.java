@@ -1,22 +1,15 @@
 package com.example.onlineshop.models;
 
-import jakarta.persistence.Column;
-
-import java.io.Serializable;
-
-public class ImageId implements Serializable {
-  @Column(name = "id")
-  private String value;
-
-  public ImageId() {
+public class ImageId extends EntityId {
+  private ImageId() {
+    super();
   }
 
   public ImageId(String value) {
-    this.value = value;
+    super(value);
   }
 
-  @Override
-  public String toString() {
-    return value;
+  public static ImageId generate() {
+    return new ImageId(newTsid());
   }
 }

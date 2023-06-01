@@ -1,22 +1,15 @@
 package com.example.onlineshop.models;
 
-import jakarta.persistence.Column;
-
-import java.io.Serializable;
-
-public class ProductOptionItemId implements Serializable {
-  @Column(name = "id")
-  private String value;
-
-  public ProductOptionItemId() {
+public class ProductOptionItemId extends EntityId {
+  private ProductOptionItemId() {
+    super();
   }
 
   public ProductOptionItemId(String value) {
-    this.value = value;
+    super(value);
   }
 
-  @Override
-  public String toString() {
-    return value;
+  public static ProductOptionItemId generate() {
+    return new ProductOptionItemId(newTsid());
   }
 }
