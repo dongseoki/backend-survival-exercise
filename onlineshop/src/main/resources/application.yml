@@ -8,4 +8,4 @@ jwt:
   secret: secret
 
 server:
-  port: 8090
+  port: 8080

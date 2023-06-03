@@ -8,6 +8,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
 
@@ -52,5 +53,9 @@ public class User {
 
   public String name() {
     return name;
+  }
+
+  public void changePassword(String password, PasswordEncoder passwordEncoder) {
+    this.encodedPassword = passwordEncoder.encode(password);
   }
 }
