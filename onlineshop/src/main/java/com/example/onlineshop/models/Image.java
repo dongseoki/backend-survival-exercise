@@ -25,7 +25,10 @@ public class Image {
   private LocalDateTime updatedAt;
 
   public Image() {
+  }
 
+  public Image(String url) {
+    this.url = url;
   }
 
   public String url() {

@@ -12,7 +12,7 @@ public record ProductSummaryDto(
 ) {
   public static ProductSummaryDto of(Product product, Category category) {
     return new ProductSummaryDto(
-        product.id(),
+        product.id().toString(),
         CategoryDto.of(category),
         ImageDto.of(product.images().stream().findFirst().get().url()),
         product.name(),

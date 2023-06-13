@@ -56,13 +56,24 @@ public class Product {
   public Product() {
   }
 
+  public Product(ProductId productId, CategoryId categoryId, List<Image> images, String name,
+                 Money price, List<ProductOption> options, String description) {
+    this.id = productId;
+    this.categoryId = categoryId;
+    this.images = images;
+    this.name = name;
+    this.price = price;
+    this.options = options;
+    this.description = description;
+  }
+
 
   public CategoryId categoryId() {
     return categoryId;
   }
 
-  public String id() {
-    return id.toString();
+  public ProductId id() {
+    return id;
   }
 
   public List<Image> images() {

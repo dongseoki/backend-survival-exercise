@@ -11,7 +11,7 @@ public record ProductOptionDto(
 ) {
   public static ProductOptionDto of(ProductOption option) {
     return new ProductOptionDto(
-        option.id(),
+        option.id().toString(),
         option.name(),
         option.items().stream().map(ProductOptionItemDto::of).toList());
   }

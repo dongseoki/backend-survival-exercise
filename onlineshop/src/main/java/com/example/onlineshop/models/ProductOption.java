@@ -35,8 +35,18 @@ public class ProductOption {
   @UpdateTimestamp
   private LocalDateTime updatedAt;
 
-  public String id() {
-    return id.toString();
+  public <E> ProductOption(ProductOptionId productOptionId, String name,
+                           List<ProductOptionItem> productOptionItem) {
+    this.id = productOptionId;
+    this.name = name;
+    this.items = productOptionItem;
+  }
+
+  public ProductOption() {
+  }
+
+  public ProductOptionId id() {
+    return id;
   }
 
   public String name() {
@@ -45,5 +55,9 @@ public class ProductOption {
 
   public List<ProductOptionItem> items() {
     return items;
+  }
+
+  public ProductOptionItem item(int optionItemIndex) {
+    return items.get(optionItemIndex);
   }
 }

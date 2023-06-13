@@ -17,7 +17,7 @@ public record ProductDetailDto(
 ) {
   public static ProductDetailDto of(Product product, Category category) {
     return new ProductDetailDto(
-        product.id(),
+        product.id().toString(),
         CategoryDto.of(category),
         product.images().stream().map(image -> ImageDto.of(image.url())).toList(),
         product.name(),

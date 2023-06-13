@@ -24,6 +24,14 @@ public class ProductOptionItem {
   @UpdateTimestamp
   private LocalDateTime updatedAt;
 
+  public ProductOptionItem(ProductOptionItemId productOptionItemId, String name) {
+    this.id = productOptionItemId;
+    this.name = name;
+  }
+
+  public ProductOptionItem() {
+  }
+
   public ProductOptionItemId id() {
     return id;
   }
