@@ -23,6 +23,9 @@ public class BackdoorController {
   @GetMapping("/setup-database")
   @Transactional
   public String setupDatabase() {
+    deleteCartLineItemOptions();
+    deleteCartLineItems();
+    deleteCarts();
     deleteImages();
     deleteProductOptionItems();
     deleteProductOptions();
@@ -246,5 +249,17 @@ public class BackdoorController {
         "https://ahastudio.github.io/my-image-assets/images/cbcl-products/02.jpg"
         , now, now
     );
+  }
+
+  private void deleteCarts() {
+    jdbcTemplate.update("DELETE FROM carts");
+  }
+
+  private void deleteCartLineItems() {
+    jdbcTemplate.update("DELETE FROM cart_line_items");
+  }
+
+  private void deleteCartLineItemOptions() {
+    jdbcTemplate.update("DELETE FROM cart_line_item_options");
   }
 }
