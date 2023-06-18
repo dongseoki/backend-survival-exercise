@@ -60,4 +60,11 @@ public class ProductOption {
   public ProductOptionItem item(int optionItemIndex) {
     return items.get(optionItemIndex);
   }
+
+  public ProductOptionItem itemById(ProductOptionItemId itemId) {
+    return items.stream()
+                .filter(item -> item.id().equals(itemId))
+                .findFirst()
+                .orElseThrow();
+  }
 }

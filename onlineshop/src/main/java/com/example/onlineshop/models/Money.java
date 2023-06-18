@@ -19,4 +19,11 @@ public class Money {
     return amount;
   }
 
+  public long asLong() {
+    return amount;
+  }
+
+  public Money times(int quantity) {
+    return new Money(amount * quantity);
+  }
 }

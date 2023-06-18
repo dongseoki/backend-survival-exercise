@@ -100,4 +100,15 @@ public class Product {
   public ProductOption option(int i) {
     return options.get(i);
   }
+
+  public Image image(int i) {
+    return images.get(i);
+  }
+
+  public ProductOption optionById(ProductOptionId optionId) {
+    return options.stream()
+                  .filter(option -> option.id().equals(optionId))
+                  .findFirst()
+                  .orElseThrow();
+  }
 }

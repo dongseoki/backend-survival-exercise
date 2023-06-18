@@ -1,6 +1,5 @@
 package com.example.onlineshop.controllers;
 
-import com.example.onlineshop.annotations.UserRequired;
 import com.example.onlineshop.dtos.AddProductToCartDto;
 import com.example.onlineshop.models.AuthUser;
 import com.example.onlineshop.models.CartLineItemOption;
@@ -8,6 +7,7 @@ import com.example.onlineshop.models.ProductId;
 import com.example.onlineshop.models.ProductOptionId;
 import com.example.onlineshop.models.ProductOptionItemId;
 import com.example.onlineshop.models.UserId;
+import com.example.onlineshop.security.UserRequired;
 import com.example.onlineshop.services.AddProductToCartService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
