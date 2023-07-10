@@ -1,14 +1,19 @@
 package com.example.onlineshop;
 
+import com.example.onlineshop.models.Address;
 import com.example.onlineshop.models.CategoryId;
 import com.example.onlineshop.models.Image;
 import com.example.onlineshop.models.Money;
+import com.example.onlineshop.models.Payment;
+import com.example.onlineshop.models.PhoneNumber;
+import com.example.onlineshop.models.PostalCode;
 import com.example.onlineshop.models.Product;
 import com.example.onlineshop.models.ProductId;
 import com.example.onlineshop.models.ProductOption;
 import com.example.onlineshop.models.ProductOptionId;
 import com.example.onlineshop.models.ProductOptionItem;
 import com.example.onlineshop.models.ProductOptionItemId;
+import com.example.onlineshop.models.Receiver;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -29,6 +34,20 @@ public class Fixtures {
               productOption("크기")
           ),
           "편하게 입을 수 있는 맨투맨");
+    }
+    if (name.equals("셔츠")) {
+      return new Product(
+          new ProductId("0BV000PRO0001"),
+          new CategoryId("0BV000CAT0001"),
+          List.of(
+              new Image("http://example.com/product-02.jpg")
+          ),
+          "셔츠",
+          new Money(123_000L),
+          List.of(
+              productOption("크기")
+          ),
+          "편합니다");
     }
 
     throw new NoSuchElementException("Product - name: " + name);
@@ -91,5 +110,17 @@ public class Fixtures {
     }
 
     throw new NoSuchElementException("ProductOptionItem - name: " + name);
+  }
+
+  public static Receiver receiver(String name) {
+    return new Receiver(
+        name,
+        new Address("서울 성동구 상원12길 34", "ㅇㅇㅇ호",
+            new PostalCode("04790")),
+        new PhoneNumber("01012345678"));
+  }
+
+  public static Payment payment() {
+    return new Payment("PaymentMerchantID", "PaymentTransactionID");
   }
 }
