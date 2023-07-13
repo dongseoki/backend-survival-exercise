@@ -73,6 +73,7 @@ public class CreateOrderService {
         OrderStatus.PAID);
 
     orderRepository.save(order);
+    cart.clear();
 
     return order;
   }

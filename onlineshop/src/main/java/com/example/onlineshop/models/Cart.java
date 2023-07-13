@@ -87,4 +87,8 @@ public class Cart {
                         lineItem.sameProduct(product.id(), options))
                     .findFirst();
   }
+
+  public void clear() {
+    lineItems.clear();
+  }
 }
