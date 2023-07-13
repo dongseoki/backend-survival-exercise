@@ -10,6 +10,9 @@ public class PostalCode {
   @Column(name = "postal_code")
   private String value;
 
+  public PostalCode() {
+  }
+
   public PostalCode(String value) {
     this.value = value;
   }

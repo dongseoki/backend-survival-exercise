@@ -1,19 +1,23 @@
 package com.example.onlineshop.models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import jakarta.persistence.Embedded;
 
 import java.util.Objects;
 
 @Embeddable
 public class Receiver {
+  @Column(name = "receiver_name")
   private String name;
 
+  @Embedded
   private Address address;
 
+  @Embedded
   private PhoneNumber phoneNumber;
 
   private Receiver() {
-
   }
 
   public Receiver(String name, Address address, PhoneNumber phoneNumber) {

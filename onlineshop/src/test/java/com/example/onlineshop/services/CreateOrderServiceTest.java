@@ -1,6 +1,7 @@
 package com.example.onlineshop.services;
 
 import com.example.onlineshop.Fixtures;
+import com.example.onlineshop.infrastructures.PaymentValidator;
 import com.example.onlineshop.models.Address;
 import com.example.onlineshop.models.Cart;
 import com.example.onlineshop.models.CartLineItemOption;
@@ -39,6 +40,9 @@ class CreateOrderServiceTest {
   @Autowired
   private CreateOrderService createOrderService;
 
+  @Autowired
+  private PaymentValidator paymentValidator;
+
   private Product product;
 
   private Set<CartLineItemOption> options;
@@ -53,9 +57,10 @@ class CreateOrderServiceTest {
     productRepository = mock(ProductRepository.class);
     cartRepository = mock(CartRepository.class);
     orderRepository = mock(OrderRepository.class);
+    paymentValidator = mock(PaymentValidator.class);
 
     createOrderService = new CreateOrderService(
-        productRepository, cartRepository, orderRepository);
+        productRepository, cartRepository, orderRepository, paymentValidator);
   }
 
   @BeforeEach
