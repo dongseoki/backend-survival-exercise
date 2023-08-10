@@ -16,4 +16,8 @@ public record AuthUser(
       String id, String role, String accessToken) {
     return new AuthUser(id, "", "", role, accessToken);
   }
+
+  public boolean isAdmin() {
+    return Role.valueOf(role).equals(Role.ROLE_ADMIN);
+  }
 }

@@ -58,4 +58,8 @@ public class User {
   public void changePassword(String password, PasswordEncoder passwordEncoder) {
     this.encodedPassword = passwordEncoder.encode(password);
   }
+
+  public boolean isAdmin() {
+    return role == (Role.ROLE_ADMIN);
+  }
 }
