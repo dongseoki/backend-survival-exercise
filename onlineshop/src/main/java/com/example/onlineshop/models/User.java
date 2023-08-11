@@ -62,4 +62,12 @@ public class User {
   public boolean isAdmin() {
     return role == (Role.ROLE_ADMIN);
   }
+
+  public String email() {
+    return email;
+  }
+
+  public Role role() {
+    return role;
+  }
 }
