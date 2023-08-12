@@ -14,4 +14,6 @@ public interface OrderRepository extends CrudRepository<Order, OrderId> {
   List<Order> findAllByUserIdOrderByIdDesc(UserId userId);
 
   Optional<Order> findByIdAndUserId(OrderId orderId, UserId userId);
+
+  List<Order> findAllByOrderByIdDesc();
 }

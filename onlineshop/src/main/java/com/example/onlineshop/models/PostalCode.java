@@ -34,4 +34,8 @@ public class PostalCode {
     return Objects.hash(value);
   }
 
+  @Override
+  public String toString() {
+    return value;
+  }
 }

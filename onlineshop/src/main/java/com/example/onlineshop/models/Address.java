@@ -47,4 +47,15 @@ public class Address {
     return Objects.hash(address1, address2, postalCode);
   }
 
+  public String address1() {
+    return address1;
+  }
+
+  public String address2() {
+    return address2;
+  }
+
+  public PostalCode postalCode() {
+    return postalCode;
+  }
 }
