@@ -24,12 +24,20 @@ public class Category {
   @UpdateTimestamp
   private LocalDateTime updatedAt;
 
+  @Column(name = "hidden")
+  private boolean hidden;
+
   private Category() {
   }
 
-  public Category(CategoryId id, String name) {
+  public Category(CategoryId id, String name, boolean hidden) {
     this.id = id;
     this.name = name;
+    this.hidden = hidden;
+  }
+
+  public Category(CategoryId id, String name) {
+    this(id, name, false);
   }
 
   public CategoryId id() {
@@ -38,6 +46,10 @@ public class Category {
 
   public String name() {
     return name;
+  }
+
+  public boolean hidden() {
+    return hidden;
   }
 }
 // …(후략)…

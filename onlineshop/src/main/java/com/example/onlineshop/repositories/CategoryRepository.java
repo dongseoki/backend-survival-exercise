@@ -10,5 +10,8 @@ import java.util.List;
 @Repository
 public interface CategoryRepository
     extends CrudRepository<Category, CategoryId> {
-  public List<Category> findAll();
+
+  List<Category> findAllByHiddenIsFalseOrderByIdAsc();
+
+  List<Category> findAllByOrderByIdAsc();
 }

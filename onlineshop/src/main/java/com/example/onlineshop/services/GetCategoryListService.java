@@ -1,7 +1,6 @@
 package com.example.onlineshop.services;
 
 import com.example.onlineshop.models.Category;
-import com.example.onlineshop.models.CategoryId;
 import com.example.onlineshop.repositories.CategoryRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +17,10 @@ public class GetCategoryListService {
   }
 
   public List<Category> getCategories() {
-    return categoryRepository.findAll();
+    return categoryRepository.findAllByHiddenIsFalseOrderByIdAsc();
+  }
+
+  public List<Category> getAllCategories() {
+    return categoryRepository.findAllByOrderByIdAsc();
   }
 }
