@@ -4,18 +4,22 @@ import com.example.onlineshop.Fixtures;
 import com.example.onlineshop.controllers.ControllerTest;
 import com.example.onlineshop.models.Order;
 import com.example.onlineshop.models.OrderId;
+import com.example.onlineshop.models.OrderStatus;
 import com.example.onlineshop.models.User;
 import com.example.onlineshop.services.GetAdminOrderDetailService;
 import com.example.onlineshop.services.GetOrderListService;
+import com.example.onlineshop.services.UpdateOrderService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(AdminOrderController.class)
@@ -25,6 +29,9 @@ class AdminOrderControllerTest extends ControllerTest {
 
   @MockBean
   private GetOrderListService getOrderListService;
+
+  @MockBean
+  private UpdateOrderService updateOrderService;
 
   @MockBean
   private GetAdminOrderDetailService getAdminOrderDetailService;
@@ -52,5 +59,29 @@ class AdminOrderControllerTest extends ControllerTest {
            .andExpect(status().isOk());
 
     verify(getAdminOrderDetailService).getOrderDetail(orderId);
+  }
+
+  @Test
+  @DisplayName("PATCH /admin/orders/{id}")
+  void update() throws Exception {
+    User user = Fixtures.user("tester");
+    Order order = Fixtures.order(user);
+
+    String json = """
+        {
+            "status": "ready"
+        }
+        """;
+
+    OrderId orderId = order.id();
+
+    mockMvc.perform(patch("/admin/orders/" + orderId)
+               .header("Authorization", "Bearer " + adminAccessToken)
+               .contentType(MediaType.APPLICATION_JSON)
+               .content(json))
+           .andExpect(status().isOk());
+
+    verify(updateOrderService)
+        .updateOrderStatus(orderId, OrderStatus.READY);
   }
 }

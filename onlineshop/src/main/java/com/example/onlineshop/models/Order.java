@@ -123,4 +123,8 @@ public class Order {
   public Payment payment() {
     return payment;
   }
+
+  public void changeStatus(OrderStatus status) {
+    this.status = status;
+  }
 }
