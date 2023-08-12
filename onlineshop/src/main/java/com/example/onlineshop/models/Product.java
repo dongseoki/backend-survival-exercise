@@ -53,11 +53,19 @@ public class Product {
   @UpdateTimestamp
   private LocalDateTime updatedAt;
 
+  @Column(name = "hidden")
+  private boolean hidden;
+
   public Product() {
   }
 
   public Product(ProductId productId, CategoryId categoryId, List<Image> images, String name,
                  Money price, List<ProductOption> options, String description) {
+    this(productId, categoryId, images, name, price, options, description, false);
+  }
+
+  public Product(ProductId productId, CategoryId categoryId, List<Image> images, String name,
+                 Money price, List<ProductOption> options, String description, boolean hidden) {
     this.id = productId;
     this.categoryId = categoryId;
     this.images = images;
@@ -65,6 +73,7 @@ public class Product {
     this.price = price;
     this.options = options;
     this.description = description;
+    this.hidden = hidden;
   }
 
 
@@ -110,5 +119,9 @@ public class Product {
                   .filter(option -> option.id().equals(optionId))
                   .findFirst()
                   .orElseThrow();
+  }
+
+  public boolean hidden() {
+    return hidden;
   }
 }
