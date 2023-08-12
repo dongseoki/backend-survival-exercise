@@ -3,20 +3,26 @@ package com.example.onlineshop.controllers.admin;
 import com.example.onlineshop.controllers.ControllerTest;
 import com.example.onlineshop.models.Category;
 import com.example.onlineshop.models.CategoryId;
+import com.example.onlineshop.services.CreateCategoryService;
 import com.example.onlineshop.services.GetCategoryDetailService;
 import com.example.onlineshop.services.GetCategoryListService;
+import com.example.onlineshop.services.UpdateCategoryService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -30,6 +36,12 @@ class AdminCategoryControllerTest extends ControllerTest {
 
   @MockBean
   private GetCategoryDetailService getCategoryDetailService;
+
+  @MockBean
+  private CreateCategoryService createCategoryService;
+
+  @MockBean
+  private UpdateCategoryService updateCategoryService;
 
   @Test
   @DisplayName("GET /admin/categories")
@@ -60,5 +72,45 @@ class AdminCategoryControllerTest extends ControllerTest {
                .header("Authorization", "Bearer " + adminAccessToken))
            .andExpect(status().isOk())
            .andExpect(content().string(containsString("top")));
+  }
+
+  @Test
+  @DisplayName("POST /admin/categories")
+  void create() throws Exception {
+    String json = """
+        {
+            "name": "New Category"
+        }
+        """;
+
+    mockMvc.perform(post("/admin/categories")
+               .header("Authorization", "Bearer " + adminAccessToken)
+               .contentType(MediaType.APPLICATION_JSON)
+               .content(json))
+           .andExpect(status().isCreated());
+
+    verify(createCategoryService).createCategory("New Category");
+  }
+
+  @Test
+  @DisplayName("PATCH /admin/categories/{id}")
+  void update() throws Exception {
+    CategoryId categoryId = CategoryId.generate();
+
+    String json = """
+        {
+            "name": "New Name",
+            "hidden": true
+        }
+        """;
+
+    mockMvc.perform(patch("/admin/categories/" + categoryId)
+               .header("Authorization", "Bearer " + adminAccessToken)
+               .contentType(MediaType.APPLICATION_JSON)
+               .content(json))
+           .andExpect(status().isOk());
+
+    verify(updateCategoryService)
+        .updateCategory(categoryId, "New Name", true);
   }
 }

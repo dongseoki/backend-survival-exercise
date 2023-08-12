@@ -51,5 +51,17 @@ public class Category {
   public boolean hidden() {
     return hidden;
   }
+
+  public void changeName(String name) {
+    this.name = name;
+  }
+
+  public void hide() {
+    hidden = true;
+  }
+
+  public void show() {
+    hidden = false;
+  }
 }
 // …(후략)…
