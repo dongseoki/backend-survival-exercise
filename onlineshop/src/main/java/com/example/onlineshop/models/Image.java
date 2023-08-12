@@ -28,6 +28,7 @@ public class Image {
   }
 
   public Image(String url) {
+    this.id = ImageId.generate();
     this.url = url;
   }
 
@@ -38,5 +39,13 @@ public class Image {
 
   public String url() {
     return url;
+  }
+
+  public ImageId id() {
+    return id;
+  }
+
+  public void changeUrl(String url) {
+    this.url = url;
   }
 }

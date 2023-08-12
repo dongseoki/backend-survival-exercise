@@ -10,6 +10,7 @@ import com.example.onlineshop.models.ProductId;
 import com.example.onlineshop.services.CreateProductService;
 import com.example.onlineshop.services.GetProductDetailService;
 import com.example.onlineshop.services.GetProductListService;
+import com.example.onlineshop.services.UpdateProductService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +22,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -40,6 +43,9 @@ class AdminProductControllerTest extends ControllerTest {
 
   @MockBean
   private CreateProductService createProductService;
+
+  @MockBean
+  private UpdateProductService updateProductService;
 
   @Test
   @DisplayName("GET /admin/products")
@@ -134,5 +140,63 @@ class AdminProductControllerTest extends ControllerTest {
 
     verify(createProductService).createProduct(
         any(), any(), any(), any(), any(), any());
+  }
+
+  @Test
+  @DisplayName("PATCH /admin/products/{id}")
+  void update() throws Exception {
+    String json = """
+        {
+            "categoryId": "0BV000CAT0001",
+            "images": [
+                {
+                    "id": "0BV000IMG0001",
+                    "url": "https://example.com/products/01.jpg"
+                },
+                {
+                    "url": "https://example.com/products/02.jpg"
+                }
+            ],
+            "name": "맨투맨",
+            "price": 128000,
+            "options": [
+                {
+                    "id": "0BV000OPT0001",
+                    "name": "컬러",
+                    "items": [
+                        {
+                            "id": "0BV000ITEM001",
+                            "name": "black"
+                        },
+                        {
+                            "name": "white"
+                        }
+                    ]
+                },
+                {
+                    "name": "사이즈",
+                    "items": [
+                        {
+                            "name": "S"
+                        },
+                        {
+                            "name": "M"
+                        }
+                    ]
+                }
+            ],
+            "description": "편하게 입을 수 있는 맨투맨",
+            "hidden": false
+        }
+        """;
+
+    mockMvc.perform(patch("/admin/products/123")
+               .header("Authorization", "Bearer " + adminAccessToken)
+               .contentType(MediaType.APPLICATION_JSON)
+               .content(json))
+           .andExpect(status().isOk());
+
+    verify(updateProductService)
+        .updateProduct(eq(new ProductId("123")), any());
   }
 }
