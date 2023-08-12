@@ -3,6 +3,7 @@ package com.example.onlineshop.controllers.admin;
 import com.example.onlineshop.controllers.ControllerTest;
 import com.example.onlineshop.models.Category;
 import com.example.onlineshop.models.CategoryId;
+import com.example.onlineshop.services.GetCategoryDetailService;
 import com.example.onlineshop.services.GetCategoryListService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,6 +28,9 @@ class AdminCategoryControllerTest extends ControllerTest {
   @MockBean
   private GetCategoryListService getCategoryListService;
 
+  @MockBean
+  private GetCategoryDetailService getCategoryDetailService;
+
   @Test
   @DisplayName("GET /admin/categories")
   void list() throws Exception {
@@ -37,6 +41,22 @@ class AdminCategoryControllerTest extends ControllerTest {
         .willReturn(List.of(category));
 
     mockMvc.perform(get("/admin/categories")
+               .header("Authorization", "Bearer " + adminAccessToken))
+           .andExpect(status().isOk())
+           .andExpect(content().string(containsString("top")));
+  }
+
+  @Test
+  @DisplayName("GET /admin/categories/{id}")
+  void detail() throws Exception {
+    CategoryId categoryId = CategoryId.generate();
+
+    Category category = new Category(categoryId, "top", false);
+
+    given(getCategoryDetailService.getCategory(categoryId))
+        .willReturn(category);
+
+    mockMvc.perform(get("/admin/categories/" + categoryId)
                .header("Authorization", "Bearer " + adminAccessToken))
            .andExpect(status().isOk())
            .andExpect(content().string(containsString("top")));
