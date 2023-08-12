@@ -124,4 +124,8 @@ public class Product {
   public boolean hidden() {
     return hidden;
   }
+
+  public int imageSize() {
+    return images.size();
+  }
 }
